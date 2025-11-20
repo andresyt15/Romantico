@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Te Amo</title>
+
+    <!-- Vincular CSS externo -->
+    <link rel="stylesheet" href="te_quiero.css" />
+</head>
+<body>
+    <!-- Audio -->
+    <audio id="bg-music" loop>
+        <source src="wwd.mp3juice.blog - Manuel Medrano - Una y Otra Vez Lyric Video.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Botón Play/Pause -->
+    <button id="music-btn" class="romantic-btn">▶ Reproducir</button>
+
+    <!-- Tabla de imágenes -->
+    <div class="img-table-container">
+        <table>
+            <tr>
+                <td><img src="https://via.placeholder.com/200" alt="Imagen 1"></td>
+                <td><img src="https://via.placeholder.com/200" alt="Imagen 2"></td>
+                <td><img src="https://via.placeholder.com/200" alt="Imagen 3"></td>
+            </tr>
+            <tr>
+                <td><img src="https://via.placeholder.com/200" alt="Imagen 4"></td>
+                <td><img src="https://via.placeholder.com/200" alt="Imagen 5"></td>
+                <td><img src="https://via.placeholder.com/200" alt="Imagen 6"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Botones románticos con mensajes -->
+    <div class="buttons-container">
+        <button class="romantic-btn msg-btn" data-msg="Este es tu mensaje especial 💌">
+            💌 Mensaje
+        </button>
+
+        <button class="romantic-btn msg-btn" data-msg="Te amo con todo mi corazón ❤️">
+            ❤️ Te Amo
+        </button>
+
+        <button class="romantic-btn msg-btn" data-msg="Siempre juntos, pase lo que pase 💘">
+            💘 Para Siempre
+        </button>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup hidden">
+        <div class="popup-box">
+            <p id="popup-text"></p>
+            <button id="close-popup" class="romantic-btn small">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const audio = document.getElementById('bg-music');
+            const musicBtn = document.getElementById('music-btn');
+
+            /* --- BOTÓN DE MÚSICA --- */
+            let playing = false;
+            musicBtn.addEventListener('click', () => {
+                if (!playing) {
+                    audio.play();
+                    musicBtn.textContent = '⏸ Pausar';
+                } else {
+                    audio.pause();
+                    musicBtn.textContent = '▶ Reproducir';
+                }
+                playing = !playing;
+            });
+
+            /* --- PALABRAS / CORAZONES CAYENDO --- */
+            const redColors = ['#ff0000','#ff6b6b','#ff9999','#cc0000','#ff3333','#ff8080','#e60000','#ff4d4d'];
+
+            function createFallingWord() {
+                const word = document.createElement('div');
+                word.className = 'love-word';
+                word.textContent = Math.random() > 0.5 ? '❤️' : '💖';
+                word.style.left = Math.random() * 100 + 'vw';
+                word.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                word.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                word.style.color = redColors[Math.floor(Math.random() * redColors.length)];
+                body.appendChild(word);
+                setTimeout(() => word.remove(), 5000);
+            }
+
+            for (let i = 0; i < 80; i++) setTimeout(createFallingWord, Math.random() * 2000);
+            setInterval(createFallingWord, 200);
+
+            /* --- EXPLOSIONES --- */
+            const explosionColors = ['#FFB6C1','#FFD700','#98FB98','#ADD8E6','#E6E6FA','#FFA07A','#87CEFA','#FFDEAD','#F0E68C','#DDA0DD'];
+
+            function createExplosion(e) {
+                const x = e.clientX || (e.touches && e.touches[0].clientX);
+                const y = e.clientY || (e.touches && e.touches[0].clientY);
+                if (!x || !y) return;
+
+                for (let i = 0; i < 40; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'explosion';
+                    p.textContent = Math.random() > 0.5 ? '💘' : '❤️';
+                    p.style.left = x + 'px';
+                    p.style.top = y + 'px';
+                    p.style.color = explosionColors[Math.floor(Math.random() * explosionColors.length)];
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 150 + 80;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+
+                    p.style.setProperty('--tx', tx + 'px');
+                    p.style.setProperty('--ty', ty + 'px');
+                    p.style.fontSize = (Math.random() * 15 + 18) + 'px';
+
+                    body.appendChild(p);
+                    setTimeout(() => p.remove(), 1900);
+                }
+            }
+
+            body.addEventListener('click', createExplosion);
+            body.addEventListener('touchstart', createExplosion);
+
+            /* --- POPUP DE MENSAJES --- */
+            const popup = document.getElementById("popup");
+            const popupText = document.getElementById("popup-text");
+            const closePopup = document.getElementById("close-popup");
+
+            document.querySelectorAll(".msg-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const msg = btn.getAttribute("data-msg");
+                    popupText.textContent = msg;
+                    popup.classList.remove("hidden");
+                });
+            });
+
+            closePopup.addEventListener("click", () => {
+                popup.classList.add("hidden");
+            });
+        });
+    </script>
+</body>
+</html>

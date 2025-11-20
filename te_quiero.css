@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #fb9898;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Palabras cayendo */
+.love-word {
+    position: absolute;
+    animation: fall linear infinite;
+    pointer-events: none;
+    text-shadow: 0 0 10px red;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* Explosión */
+.explosion {
+    position: absolute;
+    animation: explode 1.8s ease-out forwards;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes explode {
+    0% { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* Tabla de imágenes */
+.img-table-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+table img {
+    width: 200px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px pink;
+}
+
+/* Botones románticos */
+.romantic-btn {
+    background: #ff4081;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 18px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.romantic-btn:hover {
+    background: #ff6fa3;
+    transform: scale(1.05);
+}
+
+/* Contenedor de botones */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+/* Popup */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 350px;
+    text-align: center;
+    color: #d10062;
+    font-size: 20px;
+    box-shadow: 0 0 20px pink;
+}
+
+.romantic-btn.small {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+}
